@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import static java.lang.String.format;
+
 /**
  * @author unalpolat
  */
@@ -27,28 +29,44 @@ public class ServiceExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(AbstractServiceException.class)
   public ResponseEntity<ServiceResponse> handleServiceException(AbstractServiceException ex) {
-    ServiceResponse response = new ServiceResponse(false, ex.getErrorCode(), ex.getErrorDetail(),
-                                                   INTERNAL_EXCEPTION_KEY + ex.getClass().getSimpleName(),
-                                                   null);
-    return ResponseEntity.ok(response);
+    return ResponseEntity.ok(createFailedServiceResponse(HttpStatus.OK.value(),
+                                                         ex.getErrorCode(),
+                                                         ex.getErrorDetail(),
+                                                         INTERNAL_EXCEPTION_KEY + ex.getClass().getSimpleName()));
   }
 
   @Override
   public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
                                                              HttpStatus status, WebRequest request) {
     FieldError fieldError = ex.getBindingResult().getFieldError();
-    String errorDetail = "for " + fieldError.getField() + ", " + fieldError.getDefaultMessage();
-    ServiceResponse response = new ServiceResponse(false, null, errorDetail,
-                                                   VALIDATION_EXCEPTION_KEY + ex.getClass().getSimpleName(),
-                                                   null);
-    return ResponseEntity.ok(response);
+    assert fieldError != null;
+    String errorDetail = format("%s %s", fieldError.getField(), fieldError.getDefaultMessage());
+    return ResponseEntity.ok(createFailedServiceResponse(HttpStatus.OK.value(),
+                                                         "1002",
+                                                         errorDetail,
+                                                         VALIDATION_EXCEPTION_KEY + ex.getClass().getSimpleName()));
   }
 
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<ServiceResponse> handleConstraintViolation(ConstraintViolationException ex) {
-    ServiceResponse response = new ServiceResponse(false, null, ex.getMessage(),
-                                                   INTERNAL_EXCEPTION_KEY + ex.getClass().getSimpleName(),
-                                                   null);
-    return ResponseEntity.ok(response);
+    return ResponseEntity.ok(createFailedServiceResponse(HttpStatus.OK.value(),
+                                                         "1003",
+                                                         ex.getMessage(),
+                                                         VALIDATION_EXCEPTION_KEY + ex.getClass().getSimpleName()));
+  }
+
+  @ExceptionHandler(value = RuntimeException.class)
+  public ResponseEntity<ServiceResponse> handleRuntimeException(RuntimeException ex) {
+    return ResponseEntity.ok(createFailedServiceResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                                                         "999",
+                                                         ex.getMessage(),
+                                                         INTERNAL_EXCEPTION_KEY + ex.getClass().getSimpleName()));
+  }
+
+  private ServiceResponse createFailedServiceResponse(Integer status,
+                                                      String errorCode,
+                                                      String errorDetail,
+                                                      String messageKey) {
+    return new ServiceResponse(status, false, errorCode, errorDetail, messageKey, null);
   }
 }

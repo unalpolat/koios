@@ -2,7 +2,6 @@ package com.app.koios.request;
 
 import com.app.koios.bean.EmbeddedPlayerNames;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -15,7 +14,7 @@ public class UpdateTeamRequest extends Request {
   @Positive(message = "You should provide positive id.")
   private Long id;
 
-  @NotEmpty
+  @NotNull
   private EmbeddedPlayerNames embeddedPlayerNames;
 
   @NotBlank

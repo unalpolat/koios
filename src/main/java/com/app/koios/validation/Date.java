@@ -18,7 +18,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface Date {
 
-	String message() default "you should provide a valid date with dd/MM/yyyy format";
+	String message() default "must be a valid date with format: dd/MM/yyyy";
 
 	Class<?>[] groups() default {};
 

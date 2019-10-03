@@ -5,13 +5,13 @@ import java.util.List;
 /**
  * @author unalpolat
  */
-public class PlayersYearBean {
+public class PlayersYearPair {
 
 	private List<String> players;
 
 	private String year;
 
-	public PlayersYearBean(List<String> players, String year) {
+	public PlayersYearPair(List<String> players, String year) {
 		this.players = players;
 		this.year = year;
 	}
@@ -34,7 +34,7 @@ public class PlayersYearBean {
 
 	@Override
 	public String toString() {
-		return "PlayersYearBean{" +
+		return "PlayersYearPair{" +
 					 "players=" + players +
 					 ", year='" + year + '\'' +
 					 '}';

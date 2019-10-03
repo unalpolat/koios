@@ -18,7 +18,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface Year {
 
-  String message() default "you should provide a valid year with yyyy format";
+  String message() default "must be valid with format: yyyy";
 
   Class<?>[] groups() default {};
 

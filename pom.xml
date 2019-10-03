@@ -18,6 +18,9 @@
     <java.version>1.8</java.version>
     <commons-validator.version>1.6</commons-validator.version>
     <jackson-module-afterburner.version>2.9.8</jackson-module-afterburner.version>
+    <mockito-all.verison>1.9.5</mockito-all.verison>
+    <mockserver-maven-plugin.version>5.6.1</mockserver-maven-plugin.version>
+    <mockserver-netty.version>3.10.7</mockserver-netty.version>
     <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
     <spring-webmvc.version>5.1.9.RELEASE</spring-webmvc.version>
   </properties>
@@ -84,11 +87,24 @@
       <version>${jackson-module-afterburner.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.mock-server</groupId>
+      <artifactId>mockserver-netty</artifactId>
+      <version>${mockserver-netty.version}</version>
+    </dependency>
+
     <!-- Test dependencies -->
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>${mockito-all.verison}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -99,7 +115,37 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
+
+      <plugin>
+        <groupId>org.mock-server</groupId>
+        <artifactId>mockserver-maven-plugin</artifactId>
+        <version>${mockserver-maven-plugin.version}</version>
+        <configuration>
+          <serverPort>1080</serverPort>
+          <proxyPort>1090</proxyPort>
+          <logLevel>DEBUG</logLevel>
+          <initializationClass>org.mockserver.maven.ExampleInitializationClass</initializationClass>
+        </configuration>
+        <executions>
+          <execution>
+            <id>process-test-classes</id>
+            <phase>process-test-classes</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>verify</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
+
+
 
 </project>

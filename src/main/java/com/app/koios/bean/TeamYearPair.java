@@ -3,13 +3,13 @@ package com.app.koios.bean;
 /**
  * @author unalpolat
  */
-public class TeamYearBean {
+public class TeamYearPair {
 
 	private String team;
 
 	private String year;
 
-	public TeamYearBean(String team, String year) {
+	public TeamYearPair(String team, String year) {
 		this.team = team;
 		this.year = year;
 	}
@@ -32,7 +32,7 @@ public class TeamYearBean {
 
 	@Override
 	public String toString() {
-		return "TeamYearBean{" +
+		return "TeamYearPair{" +
 					 "team='" + team + '\'' +
 					 ", year='" + year + '\'' +
 					 '}';

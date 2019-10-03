@@ -10,7 +10,6 @@ public class CreateNewPlayerRequest extends Request {
 
   private String team;
 
-  @NotBlank
   @Date
   private String birthday;
 

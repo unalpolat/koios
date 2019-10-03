@@ -5,6 +5,10 @@ package com.app.koios.response;
  */
 public class ServiceResponse<T> {
 
+  private static final ServiceResponse DEFAULT_SUCCESS = from(null);
+
+  private final Integer status;
+
   private final Boolean successful;
 
   private final String errorCode;
@@ -15,7 +19,9 @@ public class ServiceResponse<T> {
 
   private final T data;
 
-  public ServiceResponse(Boolean successful, String errorCode, String errorDetail, String messageKey, T data) {
+  public ServiceResponse(Integer status, Boolean successful, String errorCode, String errorDetail,
+                         String messageKey, T data) {
+    this.status = status;
     this.successful = successful;
     this.errorCode = errorCode;
     this.errorDetail = errorDetail;
@@ -24,11 +30,15 @@ public class ServiceResponse<T> {
   }
 
   public static <T> ServiceResponse<T> from(T data) {
-    return new ServiceResponse<>(true, null, null, null, data);
+    return new ServiceResponse<>(200, true, null, null, null, data);
   }
 
-  public static <T> ServiceResponse<T> failure(String errorCode, String errorDetail) {
-    return new ServiceResponse<>(false, errorCode, errorDetail, null, null);
+  public static ServiceResponse successful() {
+    return DEFAULT_SUCCESS;
+  }
+
+  public Integer getStatus() {
+    return status;
   }
 
   public Boolean getSuccessful() {
@@ -54,9 +64,11 @@ public class ServiceResponse<T> {
   @Override
   public String toString() {
     return "ServiceResponse{" +
-           "successful=" + successful +
+           "status=" + status +
+           ", successful=" + successful +
            ", errorCode='" + errorCode + '\'' +
            ", errorDetail='" + errorDetail + '\'' +
+           ", errorMessageKey='" + errorMessageKey + '\'' +
            ", data=" + data +
            '}';
   }

@@ -1,0 +1,26 @@
+insert into player(name, year, team, birthday)
+values ('Unal', '2017', 'Fenerbahce', '12/06/1994'),
+    ('Mehmet', '2017', 'Fenerbahce', '22/09/1997'),
+    ('Halil', '2017', 'Fenerbahce', '23/05/1988'),
+    ('Ayse', '2018', 'Fenerbahce', '11/08/1990'),
+    ('Sadık', '2018', 'Fenerbahce', '06/02/1984'),
+    ('Selman', '2017', 'Galatasaray', '03/10/1987'),
+    ('Ferhat', '2017', 'Galatasaray', '19/11/1993'),
+    ('Muslera', '2016', 'Galatasaray', '21/06/1990'),
+    ('Unal', '2016', 'Galatasaray', '12/06/1994'),
+    ('Mehmet', '2016', 'Galatasaray', '22/09/1997'),
+    ('Halil', '2016', 'Galatasaray', '23/05/1988'),
+    ('Can', '2016', 'Fenerbahce', '30/08/1989'),
+    ('Aydın', '2016', 'Fenerbahce', '26/04/1988'),
+    ('Bekir', '2017', 'Besiktas', '03/03/1986'),
+    ('Ferhat', '2017', 'Besiktas', '29/12/1992'),
+    ('Hamit', '2017', 'Besiktas', '13/07/1996'),
+    ('Furkan', '2017', 'Besiktas', '08/12/1991'),
+    ('Can', '2017', 'Besiktas', '30/08/1989');
+insert into team(name, year, embedded_player_names, currency)
+values ('Fenerbahce', '2017', '{"names": ["Unal", "Mehmet", "Halil"]}', 'tl'),
+    ('Fenerbahce', '2018', '{"names": ["Ayse", "Sadık"]}', 'tl'),
+    ('Fenerbahce', '2016', '{"names": ["Can", "Aydın"]}', 'tl'),
+    ('Galatasaray', '2017', '{"names": ["Selman", "Ferhat"]}', 'euro'),
+    ('Galatasaray', '2016', '{"names": ["Muslera", "Unal", "Mehmet", "Halil"]}', 'euro'),
+    ('Besiktas', '2017', '{"names": ["Bekir", "Ferhat", "Hamit", "Furkan", "Can"]}', 'dollar');
